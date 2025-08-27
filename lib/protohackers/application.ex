@@ -35,6 +35,9 @@ defmodule Protohackers.Application do
             tcp_server_spec(BudgetChat, port),
             Protohackers.BudgetChat.Room
           ]
+
+        "unusual_database" ->
+          [{Protohackers.UnusualDatabase, port: port}]
       end
 
     # See https://hexdocs.pm/elixir/Supervisor.html
