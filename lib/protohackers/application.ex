@@ -28,6 +28,13 @@ defmodule Protohackers.Application do
             dynamic_supervisor_spec(MeansToAnEnd),
             tcp_server_spec(MeansToAnEnd, port)
           ]
+
+        "budget_chat" ->
+          [
+            dynamic_supervisor_spec(BudgetChat),
+            tcp_server_spec(BudgetChat, port),
+            Protohackers.BudgetChat.Room
+          ]
       end
 
     # See https://hexdocs.pm/elixir/Supervisor.html

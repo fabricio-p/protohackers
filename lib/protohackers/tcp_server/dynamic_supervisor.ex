@@ -13,7 +13,12 @@ defmodule Protohackers.TcpServer.DynamicSupervisor do
   end
 
   def start_worker(self, handler, socket) do
-    spec = {Worker, {handler, socket}}
+    spec = %{
+      id: Worker,
+      start: {Worker, :start_link, [{handler, socket}]},
+      restart: :temporary
+    }
+
     DynamicSupervisor.start_child(self, spec)
   end
 end

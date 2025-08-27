@@ -53,7 +53,15 @@ defmodule Protohackers.TcpServer do
   end
 
   defp loop(%{socket: socket, supervisor: supervisor, handler: handler} = state) do
-    :ok = accept_and_serve(socket, supervisor, handler)
+    try do
+      :ok = accept_and_serve(socket, supervisor, handler)
+    catch
+      k, e ->
+        Logger.error(
+          "TCP server: #{inspect(k)}, #{inspect(e)}\n#{inspect(__STACKTRACE__)}"
+        )
+    end
+
     loop(state)
   end
 
@@ -71,5 +79,6 @@ defmodule Protohackers.TcpServer do
       {:error, reason} ->
         {:error, reason}
     end
+    |> IO.inspect(label: :accept_and_serve)
   end
 end
